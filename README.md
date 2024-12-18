@@ -1,10 +1,10 @@
 ## ec2grep - EC2 cli tool
 
 ### Install
-Preferally for the default system interpreter instead of a virtualenv.
+Preferably for the default system interpreter instead of a virtualenv
 
 ```bash
-pip install git+https://github.com/bergundy/ec2grep
+pip install git+https://github.com/eladitzhakian/ec2grep
 ```
 
 ### Usage

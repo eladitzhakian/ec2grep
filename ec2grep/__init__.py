@@ -30,7 +30,10 @@ def _get_instances(ec2, filter_):
     return list(itertools.chain.from_iterable(r['Instances'] for r in reservations))
 
 
-def match_instances(region_name, query, attributes=DEFAULT_ATTRIBUTES):
+def match_instances(region_name, query, attributes=None):
+    if attributes is None:
+        attributes = DEFAULT_ATTRIBUTES
+
     ec2 = boto3.client('ec2', region_name=region_name)
     get_instances = partial(_get_instances, ec2)
     instance_lists = executor.map(get_instances, [
@@ -128,7 +131,7 @@ def ls(ctx, query, formatter, delim, custom_format):
     if not matches:
         die("No matches found")
 
-    click.echo(delim.join(formatter.format(**{k: f(m) for k, f in formatters.iteritems()}) for m in matches))
+    click.echo(delim.join(formatter.format(**{k: f(m) for k, f in formatters.items()}) for m in matches))
 
 
 if __name__ == '__main__':

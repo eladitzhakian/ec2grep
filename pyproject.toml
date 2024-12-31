@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ec2grep"
-version = "0.1.0"
+version = "0.2.0"
 description = "CLI tool for working with EC2"
 authors = ["Roey Berman <roey.berman@gmail.com>"]
 

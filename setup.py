@@ -9,7 +9,7 @@ setup(
     author='Roey Berman',
     author_email='roey.berman@gmail.com',
     packages=['ec2grep'],
-    verion='0.1',
+    version='0.2',
     keywords=['ec2', 'cli', 'aws', 'ssh'],
     install_requires=[
         'boto3',

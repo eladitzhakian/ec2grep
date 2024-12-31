@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from concurrent.futures import ThreadPoolExecutor as Executor
 from functools import partial
-from operator import itemgetter
 
 import os
 import sys
@@ -12,8 +11,8 @@ import six
 
 executor = Executor(4)
 name = (lambda i: {tag['Key']: tag['Value'] for tag in i.get('Tags', [])}.get('Name', ''))
-public_ip = itemgetter('PublicIpAddress')
-private_ip = itemgetter('PrivateIpAddress')
+public_ip = lambda x: x.get('PublicIpAddress', None)
+private_ip = lambda x: x.get('PrivateIpAddress', None)
 extended_public = (lambda i: "{} ({})".format(name(i), public_ip(i)))
 extended_private = (lambda i: "{} ({})".format(name(i), private_ip(i)))
 DEFAULT_ATTRIBUTES = [
@@ -39,7 +38,7 @@ def match_instances(region_name, query, attributes=None):
     instance_lists = executor.map(get_instances, [
         {'Name': attr, 'Values': ['*{}*'.format(query)]} for attr in attributes
     ])
-    chained = (i for i in itertools.chain.from_iterable(instance_lists) if 'PublicIpAddress' in i)
+    chained = (i for i in itertools.chain.from_iterable(instance_lists))
     return sorted(chained, key=name)
 
 
